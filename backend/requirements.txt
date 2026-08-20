@@ -1,0 +1,12 @@
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pymongo>=4.6.0
+requests>=2.31.0
+openai>=1.14.0
+python-docx>=1.1.0
+openpyxl>=3.1.2
+pypdf>=4.1.0
+playwright>=1.42.0
+python-dotenv>=1.0.1
+anthropic>=0.18.0
+google-genai>=0.1.0
