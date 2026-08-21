@@ -1,37 +1,20 @@
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Detail from './pages/Detail';
+import { isAuthenticated } from './auth';
 
-// Datos de prueba para inicializar el panel
-const MOCK_LICITACIONES = [
-  {
-    id: "1057473-12-LR26",
-    nombre: "Servicio de Guardias de Seguridad Privada",
-    organismo: "Hospital Del Salvador",
-    estado: "Activa"
-  },
-  {
-    id: "1057480-48-LE26",
-    nombre: "Adquisición de Detergentes multiusos y otros artículos de aseo",
-    organismo: "Hospital San José de Melipilla",
-    estado: "Activa"
-  },
-  {
-    id: "1037-11-LR26",
-    nombre: "ARRIENDO CAMIONES CARROZADOS PARA BRIGADAS DEPRIF",
-    organismo: "CONAF",
-    estado: "Activa"
-  },
-  {
-    id: "1016414-20-LE26",
-    nombre: "Bases Suscripciones del Servicio Adobe Creative",
-    organismo: "Subsecretaría de Economía",
-    estado: "Activa"
-  }
-];
+function PrivateRoute({ children }) {
+  return isAuthenticated() ? children : <Navigate to="/login" replace />;
+}
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-900">
-      <Dashboard licitacionesIniciales={MOCK_LICITACIONES} />
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+      <Route path="/detalle/:id" element={<PrivateRoute><Detail /></PrivateRoute>} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
   );
 }

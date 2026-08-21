@@ -5,7 +5,8 @@ from datetime import datetime
 
 from config.database import get_db
 from config.settings import CORS_ORIGINS
-from api.endpoints import licitaciones, documentos, automatizacion # <-- Agrega automatizacion
+from routes import auth
+from api.endpoints import licitaciones, documentos, automatizacion
 
 app = FastAPI(
     title="Bot Mercado Público RPA & AI",
@@ -22,9 +23,10 @@ app.add_middleware(
 )
 
 # Registrar Routers
+app.include_router(auth.router)
 app.include_router(licitaciones.router)
 app.include_router(documentos.router)
-app.include_router(automatizacion.router) # <-- Registra el router de Playwright
+app.include_router(automatizacion.router)
 
 CL_TZ = ZoneInfo("America/Santiago")
 
